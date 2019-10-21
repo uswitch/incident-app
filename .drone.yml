@@ -22,7 +22,6 @@ pipeline:
   docker-latest:
     image: plugins/docker
     repo: quay.io/uswitch/incident-app
-    target: release
     registry: quay.io
     secrets: [ docker_username, docker_password ]
     tags:
@@ -34,7 +33,6 @@ pipeline:
   docker-tagged:
     image: plugins/docker
     repo: quay.io/uswitch/incident-app
-    target: release
     registry: quay.io
     secrets: [ docker_username, docker_password ]
     tags:
