@@ -9,7 +9,7 @@ The aim of the slackbot `incident-app` is to simplify the way incidents are mana
 
 * Read about [Slack API documentation](https://api.slack.com/#read_the_docs) & [here](https://api.slack.com/start) about creation of slack apps
 
-* Once app is created on slack, You can see your app here: `https://api.slack.com/apps`, go to your app
+* Once app is created on slack, You can see your app here: `https://api.slack.com/apps`, Click on your app
 
 * Go to `Interactive Components`, Add Request URL as `https://<app-url>/actions`
 

@@ -12,15 +12,16 @@ pipeline:
     when:
       event: push
     image: plugins/docker
-    repo:  quay.io/uswitch/incident
+    repo:  quay.io/uswitch/incident-app
     registry: quay.io
+    secrets: [ docker_username, docker_password ]
     tags:
       - ${DRONE_BRANCH}
       - ${DRONE_COMMIT_SHA}
 
   docker-latest:
     image: plugins/docker
-    repo: quay.io/uswitch/incident
+    repo: quay.io/uswitch/incident-app
     target: release
     registry: quay.io
     secrets: [ docker_username, docker_password ]
@@ -32,7 +33,7 @@ pipeline:
 
   docker-tagged:
     image: plugins/docker
-    repo: quay.io/uswitch/incident
+    repo: quay.io/uswitch/incident-app
     target: release
     registry: quay.io
     secrets: [ docker_username, docker_password ]
