@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: incident-app
+data:
+  channel-id: ''
+  gdrive-folder-id: ''
+  gdrive-folder-name: ''
+  severity-help-url: ''

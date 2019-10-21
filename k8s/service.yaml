@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: incident-app
+  name: incident-app
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 9292
+      targetPort: 9292
+  selector:
+    app: incident-app

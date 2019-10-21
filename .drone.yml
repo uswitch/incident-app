@@ -1,0 +1,42 @@
+pipeline:
+  test:
+   when:
+     event: push
+   image: ruby:2.6
+   commands:
+     - gem install bundler:2.0.2
+     - bundle install
+     - bundle exec rspec
+     
+  docker-branch:
+    when:
+      event: push
+    image: plugins/docker
+    repo:  quay.io/uswitch/incident
+    registry: quay.io
+    tags:
+      - ${DRONE_BRANCH}
+      - ${DRONE_COMMIT_SHA}
+
+  docker-latest:
+    image: plugins/docker
+    repo: quay.io/uswitch/incident
+    target: release
+    registry: quay.io
+    secrets: [ docker_username, docker_password ]
+    tags:
+      - latest
+    when:
+      event: push
+      branch: master
+
+  docker-tagged:
+    image: plugins/docker
+    repo: quay.io/uswitch/incident
+    target: release
+    registry: quay.io
+    secrets: [ docker_username, docker_password ]
+    tags:
+      - ${DRONE_TAG}
+    when:
+      event: tag

@@ -1,0 +1,14 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore all text files
+*.txt
+
+# Ignore files related to API keys
+.env
+
+# Ignore files related to secrets
+.secrets
+
+incident-slack-project.json
+go.sh

@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: incident-app
+  labels:
+    app: incident-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: incident-app
+  template: # template for the pods
+    metadata:
+      labels:
+        app: incident-app
+    spec:
+      containers:
+      - name: incident-app
+        image: "quay.io/uswitch/incident:latest"
+        ports:
+          - containerPort: 9292
+
+        volumeMounts:
+        - name: incident-slack-project
+          mountPath: /tmp/incident-slack-project.json
+          subPath: incident-slack-project.json
+
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "cp /tmp/incident-slack-project.json /usr/src/app/incident-slack-project.json"]
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 9292
+          initialDelaySeconds: 3
+          periodSeconds: 5
+
+        env:
+          - name: SLACK_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: incident-app
+                key: client_id
+          - name: SLACK_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: incident-app
+                key: api_secret
+          - name: SLACK_SIGNING_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: incident-app
+                key: signing_secret
+          - name: SLACK_BEGIN_AUTH_URI
+            value: "https://<app-url>/begin_auth"
+          - name: SLACK_REDIRECT_URI
+          # value of DNS, this also needs to be updated in slack
+            value: "https://<app-url>/finish_auth"
+          - name: SLACK_CHANNEL_ID
+            valueFrom:
+              configMapKeyRef:
+                name: incident-app
+                key: channel-id
+          - name: GDRIVE_FOLDER_ID
+            valueFrom:
+              configMapKeyRef:
+                name: incident-app
+                key: gdrive-folder-id
+          - name: GDRIVE_FOLDER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: incident-app
+                key: gdrive-folder-name
+          - name: SEVERITY_HELP_URL
+            valueFrom:
+              configMapKeyRef:
+                name: incident-app
+                key: severity-help-url
+      # mounts secrets
+      volumes:
+      - name: incident-slack-project
+        secret:
+          secretName: incident-slack-project
+          items:
+            - key: incident-slack-project
+              path: incident-slack-project.json

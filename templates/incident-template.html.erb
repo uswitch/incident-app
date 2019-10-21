@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<body>
+
+<h1>incident</h1>
+<i>High level, what happened</i>
+<br>
+<h2>Suspected Root Cause</h2>
+<br><i>What could've caused the issue?</i></br>
+<h2>Impact</h2>
+<br><i>What was unavailable, for how long, how much did it cost?</i></br>
+
+<h2>Summary Timeline</h2>
+<br><table class='table table-striped table-hover table-condensed table-bordered' 
+            style='border: 1px solid black; max-width: 600px;'
+            border=1 >
+<tr>
+<th>Time from bug to identification</th>
+<th>Time from identification to fix</th>
+<th>Time from identification to data repair</th>
+</tr>
+<tr>
+<td>~XX days, or</td>
+<td>X hours Y minutes</td>
+<td>...</td>
+</tr>
+</table>
+</table></br>
+<h2>Timeline</h2>
+<br>Entries appearing in <i>italics</i> happened before the incident but were found during the investigation.</br>
+<br>
+<table class='table table-striped table-hover table-condensed table-bordered' 
+            style='border: 1px solid black; max-width: 600px;'
+            border=1 >
+<tr>
+<th>Date & Time</th>
+<th>Engineer</th>
+<th>Message</th>
+</tr>
+<% messages.each do |m| %>
+<tr>
+<td><%= m[:"date & time"].strftime time_format %></td>
+<td><%= m[:"engineer"] %></td>
+<td><%= m[:"message"] %></td>
+</tr>
+<% end %>
+</table>
+</br>
+<h2>Further work</h2>
+<i><br>What remains to be done</br></i>
+
+</body>
+</html>
